@@ -3,99 +3,485 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hansel Kwafo — Front-End Developer</title>
+  <title>Hansel Kwafo — Front-End & Design Engineer</title>
+  <meta name="description" content="Front-end developer and designer building responsive, accessible interfaces. Based in Essex, UK." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0a;
+      --bg-elev: #111111;
+      --border: #1f1f1f;
+      --border-hover: #2f2f2f;
+      --text: #ededed;
+      --text-dim: #8a8a8a;
+      --text-mute: #5a5a5a;
+      --accent: #ffffff;
+      --accent-glow: rgba(255,255,255,0.08);
+    }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6; color: #1a1a1a; background: #fafafa;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-feature-settings: 'ss01', 'cv11';
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
-    header { margin-bottom: 3rem; }
-    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .tagline { color: #666; font-size: 1.1rem; margin-bottom: 1rem; }
-    .links a {
-      color: #0066cc; text-decoration: none; margin-right: 1rem;
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
     }
-    .links a:hover { text-decoration: underline; }
-    section { margin-bottom: 3rem; }
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(circle, rgba(120,120,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,10,0.7);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      z-index: 10;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+    .logo span { color: var(--text-dim); }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    /* Hero */
+    .hero {
+      padding: 8rem 0 6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.375rem 0.875rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    h1 .gradient {
+      background: linear-gradient(135deg, #fff 0%, #888 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-dim);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-sub strong { color: var(--text); font-weight: 500; }
+    .cta-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(255,255,255,0.15); }
+    .btn-secondary {
+      background: var(--bg-elev);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--border-hover); background: #161616; }
+    /* Sections */
+    section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
     h2 {
-      font-size: 1.5rem; margin-bottom: 1rem;
-      border-bottom: 2px solid #eee; padding-bottom: 0.5rem;
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
     }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .about-grid p { color: var(--text-dim); margin-bottom: 1rem; }
+    .about-grid p strong { color: var(--text); font-weight: 500; }
+    /* Projects */
+    .projects { display: grid; gap: 1rem; }
     .project {
-      background: white; padding: 1.5rem; border-radius: 8px;
-      margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      display: block;
+      padding: 2rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
     }
-    .project h3 { margin-bottom: 0.5rem; }
-    .tags { margin-top: 0.75rem; }
+    .project::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--accent-glow), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .project:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .project:hover::before { opacity: 1; }
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+    .project h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .project-arrow {
+      color: var(--text-mute);
+      transition: transform 0.2s, color 0.2s;
+    }
+    .project:hover .project-arrow {
+      transform: translate(2px, -2px);
+      color: var(--text);
+    }
+    .project p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .metrics { display: flex; gap: 2rem; margin-bottom: 1.25rem; }
+    .metric { display: flex; flex-direction: column; }
+    .metric-value { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; }
+    .metric-label { font-size: 0.75rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.05em; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .tag {
-      display: inline-block; background: #eef; color: #336;
-      padding: 0.2rem 0.6rem; border-radius: 4px;
-      font-size: 0.85rem; margin-right: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.625rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-dim);
     }
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      .container { padding: 2rem 1rem; }
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
     }
+    .skill-cat {
+      padding: 1.5rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .skill-cat h4 {
+      font-size: 0.8rem;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .skill-list { font-size: 0.9rem; color: var(--text); line-height: 1.8; }
+    /* Contact */
+    .contact-final { padding: 6rem 0; text-align: center; border-bottom: none; }
+    .contact-final h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; }
+    .contact-final p { color: var(--text-dim); margin-bottom: 2rem; }
+    footer {
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-mute);
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    footer .mono { font-family: 'JetBrains Mono', monospace; }
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container { padding: 0 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .nav-links a:not(:last-child) { display: none; }
+      .hero { padding: 5rem 0 4rem; }
+      section { padding: 4rem 0; }
+      .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .metrics { gap: 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    /* Fade in */
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s forwards; }
+    .fade-in:nth-child(2) { animation-delay: 0.1s; }
+    .fade-in:nth-child(3) { animation-delay: 0.2s; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo">Hansel Kwafo<span> / Front-End Engineer</span></div>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
-    <header>
-      <h1>Hansel Kwafo</h1>
-      <p class="tagline">Front-End Developer & Designer · Essex, UK</p>
-      <div class="links">
-        <a href="mailto:zhate11gaming2021@outlook.com">Email</a>
-        <a href="https://github.com/HanselKwafo2">GitHub</a>
-        <a href="https://www.youtube.com/@RPM.exe2">CodePen</a>
-        <a href="">YouTube</a>
+    <!-- HERO -->
+    <section class="hero" style="border-top: none;">
+      <div class="status fade-in">
+        <span class="status-dot"></span>
+        Open to opportunities · Essex, UK
       </div>
-    </header>
-
-    <section>
-      <h2>About</h2>
-      <p>Year 10 student building responsive, accessible web interfaces with HTML, CSS, JavaScript, and Figma. Focused on becoming a Front-End / Design Engineer.</p>
-    </section>
-
-    <section>
-      <h2>Projects</h2>
-
-      <div class="project">
-        <h3>Personal Portfolio</h3>
-        <p>This site. Built from scratch with semantic HTML, responsive CSS, and mobile-first design. Hosted on GitHub Pages.</p>
-        <div class="tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">Responsive</span>
-        </div>
-      </div>
-
-      <div class="project">
-        <h3>CodePen Front-End Projects</h3>
-        <p>5+ interactive UI experiments including landing pages and animated components.</p>
-        <div class="tags">
-          <span class="tag">JavaScript</span>
-          <span class="tag">CSS Grid</span>
-          <span class="tag">UI</span>
-        </div>
-      </div>
-
-      <div class="project">
-        <h3>RPM.exe — YouTube Channel</h3>
-        <p>Faceless tech and automotive channel. 10,000+ views, 150+ subscribers. Full production workflow.</p>
-        <div class="tags">
-          <span class="tag">Content</span>
-          <span class="tag">Figma</span>
-          <span class="tag">Video</span>
-        </div>
+      <h1 class="fade-in">
+        Front-end engineer<br>
+        <span class="gradient">crafting interfaces with taste.</span>
+      </h1>
+      <p class="hero-sub fade-in">
+        I design and build <strong>responsive, accessible web experiences</strong> with HTML, CSS, JavaScript, and Figma. Currently focused on becoming a <strong>Front-End / Design Engineer</strong> at a top technology company.
+      </p>
+      <div class="cta-group fade-in">
+        <a href="#work" class="btn btn-primary">
+          View my work
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:zhate11gaming2021@outlook.com" class="btn btn-secondary">Get in touch</a>
       </div>
     </section>
 
-    <section>
-      <h2>Skills</h2>
-      <p>HTML5 · CSS3 · JavaScript · Python · Figma · Git · GitHub · Responsive Design · Accessibility · UI/UX</p>
+    <!-- WORK -->
+    <section id="work">
+      <div class="section-label">01 — Selected Work</div>
+      <h2>Recent projects</h2>
+      <div class="projects">
+
+        <a href="https://hanselkwafo2.github.io" class="project" target="_blank" rel="noopener">
+          <div class="project-header">
+            <h3>Personal Portfolio</h3>
+            <svg class="project-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </div>
+          <p>The site you're reading. Designed and built from scratch with semantic HTML, custom CSS, and mobile-first responsive design. Deployed on GitHub Pages with zero dependencies.</p>
+          <div class="tags">
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">Responsive</span>
+            <span class="tag">A11y</span>
+          </div>
+        </a>
+
+        <a href="https://codepen.io/codemotor" class="project" target="_blank" rel="noopener">
+          <div class="project-header">
+            <h3>CodePen Front-End Lab</h3>
+            <svg class="project-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </div>
+          <p>A growing collection of interactive UI experiments — landing pages, animated components, and design-to-code recreations built to sharpen front-end fundamentals.</p>
+          <div class="metrics">
+            <div class="metric">
+              <span class="metric-value">5+</span>
+              <span class="metric-label">Live projects</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">Weekly</span>
+              <span class="metric-label">Publishing cadence</span>
+            </div>
+          </div>
+          <div class="tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">CSS Grid</span>
+            <span class="tag">Animation</span>
+            <span class="tag">UI</span>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/@RPM.exe2" class="project" target="_blank" rel="noopener">
+          <div class="project-header">
+            <h3>RPM.exe — YouTube Channel</h3>
+            <svg class="project-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </div>
+          <p>Faceless long-form YouTube channel producing automotive and technology explainers. Owned the entire pipeline: research, scripting, editing in DaVinci Resolve, thumbnails in Figma, and content strategy.</p>
+          <div class="metrics">
+            <div class="metric">
+              <span class="metric-value">10,000+</span>
+              <span class="metric-label">Total views</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">150+</span>
+              <span class="metric-label">Subscribers</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">5+</span>
+              <span class="metric-label">Long-form videos</span>
+            </div>
+          </div>
+          <div class="tags">
+            <span class="tag">Content</span>
+            <span class="tag">Figma</span>
+            <span class="tag">DaVinci Resolve</span>
+            <span class="tag">Strategy</span>
+          </div>
+        </a>
+
+      </div>
     </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-label">02 — About</div>
+      <h2>A little about me</h2>
+      <div class="about-grid">
+        <div>
+          <p>I'm a <strong>Year 10 student</strong> at Beauchamps High School in Essex, UK, with a serious focus on front-end engineering, UI design, and the craft of shipping software.</p>
+          <p>I spend most of my time learning by building — writing code, recreating interfaces I admire, and publishing work publicly on GitHub and CodePen.</p>
+          <p>Outside of code, I run a technology YouTube channel and compete at district-level athletics.</p>
+        </div>
+        <div>
+          <p><strong>Now</strong> — Building projects with HTML, CSS, JavaScript, and Figma. Learning React.</p>
+          <p><strong>Next</strong> — GCSEs 2027, A-Levels in Computer Science, Maths, and Graphic Design.</p>
+          <p><strong>Long term</strong> — UK Computer Science degree → US Master's → Front-End / Design Engineer at a leading tech company.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-label">03 — Toolkit</div>
+      <h2>What I work with</h2>
+      <div class="skills-grid">
+        <div class="skill-cat">
+          <h4>Languages</h4>
+          <div class="skill-list">HTML5<br>CSS3<br>JavaScript (ES6+)<br>Python</div>
+        </div>
+        <div class="skill-cat">
+          <h4>Frameworks</h4>
+          <div class="skill-list">React <em style="color:var(--text-mute)">(learning)</em><br>Tailwind CSS<br>Flexbox · Grid</div>
+        </div>
+        <div class="skill-cat">
+          <h4>Design</h4>
+          <div class="skill-list">Figma<br>UI / UX<br>Prototyping<br>Design systems</div>
+        </div>
+        <div class="skill-cat">
+          <h4>Tools</h4>
+          <div class="skill-list">Git · GitHub<br>VS Code<br>CodePen<br>Chrome DevTools</div>
+        </div>
+        <div class="skill-cat">
+          <h4>Media</h4>
+          <div class="skill-list">DaVinci Resolve<br>CapCut<br>Thumbnail design<br>Video editing</div>
+        </div>
+        <div class="skill-cat">
+          <h4>Concepts</h4>
+          <div class="skill-list">Responsive design<br>Accessibility<br>Semantic HTML<br>Mobile-first</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-final">
+      <div class="section-label">04 — Contact</div>
+      <h2>Let's build something.</h2>
+      <p>Open to internships, mentorship, and freelance opportunities.</p>
+      <a href="mailto:zhate11gaming2021@outlook.com" class="btn btn-primary">
+        zhate11gaming2021@outlook.com
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </section>
+
+    <footer>
+      <div>© 2026 Hansel Kwafo. Built with HTML & CSS.</div>
+      <div class="mono">v1.0 — Essex, UK</div>
+    </footer>
   </div>
+
+  <script>
+    // Subtle mouse-follow glow on project cards
+    document.querySelectorAll('.project').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+        card.style.setProperty('--y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+      });
+    });
+  </script>
 </body>
 </html>
